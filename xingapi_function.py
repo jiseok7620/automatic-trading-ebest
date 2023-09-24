@@ -15,31 +15,31 @@ ebest_certpass = config.get('API_CONFIG', 'certpass') # 공인인증서 비밀�
 ebest_appkey = config.get('API_CONFIG', 'appkey')
 ebest_secretkey = config.get('API_CONFIG', 'secretkey')
 
-class Login_Ebest:
-    def Login(self):
-        # id, password, 공인인증서패스워드 지정
-        id = "ghkd7620"
-        passwd = "js1016@#"
-        cert_passwd = "js101600?!"
+# XASession 객체 생성
+instXASession = win32com.client.Dispatch("XA_Session.XASession")
 
-        # xingAPI와 COM으로 통신할 이벤트 클래스를 연결해주는작업을 하게됨
-        # => Login_Ebest 클래스에서 정보를 요청하면 이베스트서버에서 응답한 정보를 XASessionEvents 클래스에서 받음
-        self.instXASession = win32com.client.DispatchWithEvents("XA_Session.XASession", XASessionEvents)
-        self.instXASession.ConnectServer("hts.ebestsec.co.kr", 20001)
-        self.instXASession.Login(ebest_id, ebest_pass, ebest_certpass, 0, 0)
+# 이미 연결되어 있다면 연결 끊기
+if instXASession.IsConnected() == 1:
+    instXASession.DisconnectServer()
 
-class XASessionEvents:
-    logInState = 0
-    def OnLogin(self, code, msg):
-        print("onLogin method is called")
-        print(str(code))
-        print(str(msg))
+# 서버 접속 정보 설정
+'''
+실서버 : hts.ebestsec.co.kr
+모의서버 : demo.ebestsec.co.kr 
+'''
+instXASession.ConnectServer("hts.ebestsec.co.kr", 20001)
 
-        # 0000이 입력될 때만 로그인 성공
-        if str(code) == '0000':
-            XASessionEvents.logInState = 1
-        else:
-            XASessionEvents.logInState = 0
+# 사용자 정보 입력 후 로그인 시도
+instXASession.Login(ebest_id, ebest_pass, ebest_certpass, 0, False)
 
-conn = Login_Ebest()
-conn.Login()
+while True:
+    # 로그인 요청에 대한 응답을 기다림
+    pythoncom.PumpWaitingMessages()
+
+    # 연결 상태 확인: 1 - 연결됨, 0 - 미연결
+    if instXASession.IsConnected() == 1:
+        print("로그인 성공")
+        break
+    elif instXASession.IsConnected() == 0:
+        print("로그인 실패")
+        break
