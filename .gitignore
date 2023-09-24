@@ -272,6 +272,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.myenv
 env/
 venv/
 ENV/
@@ -390,3 +391,6 @@ $RECYCLE.BIN/
 
 # .idea folder
 *.idea
+
+# pdf file
+.pdf
