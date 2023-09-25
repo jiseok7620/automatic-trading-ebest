@@ -43,3 +43,12 @@ while True:
     elif instXASession.IsConnected() == 0:
         print("로그인 실패")
         break
+
+# 계좌 개수 가져오기
+account_count = instXASession.GetAccountListCount()
+print(">>> 계좌 개수 :", account_count)
+
+# 계좌 리스트 가져오기
+for i in range(account_count):
+    account = instXASession.GetAccountList(i)
+    print(">>> 계좌 번호 :", account)
