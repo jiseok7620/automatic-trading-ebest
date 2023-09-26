@@ -26,7 +26,8 @@ class Main:
         self.ACCESS_TOKEN = AccessToken(self.EBEST_APPKEY, self.EBEST_SECRETKEY)
 
     def main(self):
-        sectors.SectorsQuote.trand_by_industry_period(self, self.ACCESS_TOKEN)
+        sector_quote = sectors.SectorsQuote.trand_by_industry_period(self, self.ACCESS_TOKEN)
+        all_industry = sectors.SectorsQuote.all_industries(self, self.ACCESS_TOKEN)
 
 if __name__ == "__main__":
     ins_main = Main()

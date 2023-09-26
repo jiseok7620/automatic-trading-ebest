@@ -41,4 +41,33 @@ class SectorsQuote:
         # 요청 보내기
         request = requests.post(URL, headers=header, data=json.dumps(body))
         result = request.json()
+        print(result)
+        return result
+
+    # 전체업종
+    def all_industries(self, ACCESS_TOKEN):
+        # 요청 url
+        PATH = "indtp/market-data"
+        URL = f"{self.BASE_URL}/{PATH}"
+
+        # 요청 header
+        header = {
+            "content-type":"application/json; charset=utf-8",
+            "authorization": f"Bearer {ACCESS_TOKEN}",
+            "tr_cd":"t8424",
+            "tr_cont":"N",
+            "tr_cont_key":"",
+        }
+
+        # body
+        body = {
+                "t8424InBlock": {
+                "gubun1": ""
+              }
+            }
+
+        # 요청 보내기
+        request = requests.post(URL, headers=header, data=json.dumps(body))
+        result = request.json()
+        print(result)
         return result
