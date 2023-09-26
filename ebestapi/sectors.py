@@ -71,3 +71,32 @@ class SectorsQuote:
         result = request.json()
         print(result)
         return result
+
+    # 예상지수
+    def expected_index(self, ACCESS_TOKEN):
+        # 요청 url
+        PATH = "indtp/market-data"
+        URL = f"{self.BASE_URL}/{PATH}"
+
+        # 요청 header
+        header = {
+            "content-type": "application/json; charset=utf-8",
+            "authorization": f"Bearer {ACCESS_TOKEN}",
+            "tr_cd": "t1485",
+            "tr_cont": "N",
+            "tr_cont_key": "",
+        }
+
+        # body
+        body = {
+              "t1485InBlock" : {
+                "upcode" : "001", # 업종코드 (코스피@001 코스닥@301 KRX100@501 KP200@101 SRI@515 코스닥프리미어@404 KRX 보험@516 KRX 운송@517)
+                "gubun" : "1" # 조회구분 (1:장전 2:장후)
+              }
+            }
+
+        # 요청 보내기
+        request = requests.post(URL, headers=header, data=json.dumps(body))
+        result = request.json()
+        print(result)
+        return result

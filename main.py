@@ -26,9 +26,11 @@ class Main:
         self.ACCESS_TOKEN = AccessToken(self.EBEST_APPKEY, self.EBEST_SECRETKEY)
 
     def main(self):
+        # 단일 조회
         sector_quote = sectors.SectorsQuote.trand_by_industry_period(self, self.ACCESS_TOKEN)
         all_industry = sectors.SectorsQuote.all_industries(self, self.ACCESS_TOKEN)
-
+        expect_index = sectors.SectorsQuote.expected_index(self, self.ACCESS_TOKEN)
+        
 if __name__ == "__main__":
     ins_main = Main()
     ins_main.main()
