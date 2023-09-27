@@ -1,5 +1,7 @@
 import json
 import requests
+import asyncio
+import websockets
 
 '''
 @HEADER
@@ -100,3 +102,27 @@ class SectorsQuote:
         result = request.json()
         print(result)
         return result
+
+    # [업종] 실시간 시세
+    async def real_time_industry_price(self, ACCESS_TOKEN):
+        # 웹 소켓에 접속을 합니다.
+        async with websockets.connect(self.BASE_URL_REAL) as websocket:
+            data = {
+                 "header": {
+                      "token": f"{ACCESS_TOKEN}", # 접근 토큰
+                      "tr_type": "3" # 1: 계좌등록, 2: 계좌해제, 3: 실시간 시세 등록, 4: 실시간 시세 해제
+                 },
+                 "body": {
+                      "tr_cd": "BM_", # 이베스트증권 거래코드(TR코드)
+                      "tr_key": "001" # 단축코드 6자리 or 8자리
+                 }
+            }
+            json_str = json.dumps(data)
+
+            # 웹 소켓 서버로 데이터를 전송합니다.
+            await websocket.send(json_str)
+
+            while True:
+                # 웹 소켓 서버로 부터 메시지가 오면 콘솔에 출력합니다.
+                data = await websocket.recv()
+                print(data)
