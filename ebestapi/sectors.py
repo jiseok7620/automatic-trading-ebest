@@ -103,6 +103,34 @@ class SectorsQuote:
         print(result)
         return result
 
+    # 업종현재가
+    def industry_current_price(self, ACCESS_TOKEN):
+        # 요청 url
+        PATH = "indtp/market-data"
+        URL = f"{self.BASE_URL}/{PATH}"
+
+        # 요청 header
+        header = {
+            "content-type": "application/json; charset=utf-8",
+            "authorization": f"Bearer {ACCESS_TOKEN}",
+            "tr_cd": "t1511",
+            "tr_cont": "N",
+            "tr_cont_key": "",
+        }
+
+        # body
+        body = {
+          "t1511InBlock" : {
+            "upcode" : "001"
+          }
+        }
+
+        # 요청 보내기
+        request = requests.post(URL, headers=header, data=json.dumps(body))
+        result = request.json()
+        print(result)
+        return result
+
     # [업종] 실시간 시세
     async def real_time_industry_price(self, ACCESS_TOKEN):
         # 웹 소켓에 접속을 합니다.

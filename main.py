@@ -32,6 +32,7 @@ class Main:
         sector_quote = sectors.SectorsQuote.trand_by_industry_period(self, self.ACCESS_TOKEN)
         all_industry = sectors.SectorsQuote.all_industries(self, self.ACCESS_TOKEN)
         expect_index = sectors.SectorsQuote.expected_index(self, self.ACCESS_TOKEN)
+        industry_current_price = sectors.SectorsQuote.industry_current_price(self, self.ACCESS_TOKEN)
 
         # 실시간 조회
         asyncio.get_event_loop().run_until_complete(sectors.SectorsQuote.real_time_industry_price(self, self.ACCESS_TOKEN))
