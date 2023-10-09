@@ -62,6 +62,34 @@ class OverseesFuturesCls:
         print(result)
         return result
 
+    # 해외선물 현재가(종목정보) 조회
+    def overseas_futures_stock_information(self, ACCESS_TOKEN):
+        # 요청 url
+        PATH = "overseas-futureoption/market-data"
+        URL = f"{self.BASE_URL}/{PATH}"
+
+        # 요청 header
+        header = {
+            "content-type":"application/json; charset=utf-8",
+            "authorization": f"Bearer {ACCESS_TOKEN}",
+            "tr_cd":"o3105",
+            "tr_cont":"N",
+            "tr_cont_key":"",
+        }
+
+        # body
+        body = {
+           "o3105InBlock" :{
+              "symbol" : "CUSV23"
+           }
+        }
+
+        # 요청 보내기
+        request = requests.post(URL, headers=header, data=json.dumps(body))
+        result = request.json()
+        print(result)
+        return result
+
     # 해외선물차트 분봉 조회
     def check_overseas_futures_charts(self, ACCESS_TOKEN):
         # 요청 url
