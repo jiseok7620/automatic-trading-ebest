@@ -41,6 +41,7 @@ class Main:
         #overseas_futures.OverseesFuturesCls.overseas_futures_charts_weekly(self,self.ACCESS_TOKEN)
         #overseas_futures.OverseesFuturesCls.overseas_futures_daily_trading_inquiry(self,self.ACCESS_TOKEN)
         overseas_futures.OverseesFuturesCls.overseas_futures_stock_information(self,self.ACCESS_TOKEN)
+        overseas_futures.OverseesFuturesCls.current_price_overseas_futures(self,self.ACCESS_TOKEN)
 
         # 실시간 조회
         #asyncio.get_event_loop().run_until_complete(sectors.SectorsQuote.real_time_industry_price(self, self.ACCESS_TOKEN))
